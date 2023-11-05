@@ -38,7 +38,7 @@ const InterestRateSelector = ({ onRateChange }: Props) => {
           <div className={classes.buttonGroup}>
             {rateSelects.map((rate, index) => (
               <button className={classes.button} key={rate} onClick={() => onRateChange(rates.rates[rate]?.toFixed(2) || '')}>
-                Euribor {rateSelectText[index]}kk {rates.rates[rate]?.toFixed(2) || ''}
+                Euribor {rateSelectText[index]}kk {rates.rates[rate]?.toFixed(2) + '%' || ''}
               </button>
             ))}
           </div>
