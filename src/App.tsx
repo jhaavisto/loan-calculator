@@ -76,6 +76,7 @@ function App() {
   return (
     <div className={classes.container}>
       <h1 className={classes.header}>Lainalaskuri</h1>
+      <p>Sovellus laskee annuiteettilainan mukaiset kuukausittaiset koron ja vähennyksen osuudet sekä maksettavan summan. Lopullisen summan päälle tulee todennäköisesti vielä pankin palvelumaksu. Alla olevien painikkeiden avulla voit valita viimeisimmän arvon käyttämästäsi viitekorosta. Vaihtoehtoisesti voit syöttää viitekoron arvon itse. Syöttämiäsi tietoja ei tallenneta mihinkään.</p>
       <InterestRateSelector onRateChange={handleInterestRateChange} />
       <div className={classes.formContainer}>
         <label className={classes.label} htmlFor="principal">
