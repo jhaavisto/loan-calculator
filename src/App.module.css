@@ -28,29 +28,6 @@
   border-radius: 4px;
 }
 
-.progressWrapper {
-  width: 100%;
-  height: 40px;
-  margin-top: 15px;
-  background: #34eb71;
-  position: relative;
-}
-
-.progress {
-  position: absolute;
-  background: #646cff;
-  top: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.paymentInfo {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 20px;
-  text-align: center;
-}
-
 /* Responsive styling */
 @media (max-width: 768px) {
   .container {
@@ -65,10 +42,5 @@
   .button {
     width: 100%;
     margin-bottom: 10px;
-  }
-
-  /* Make font size a bit smaller on smaller screens */
-  .paymentInfo {
-    font-size: 18px;
   }
 }
