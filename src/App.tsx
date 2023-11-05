@@ -36,9 +36,9 @@ function App() {
     const interestRate = loanDetails.interestRate ? parseFloat(loanDetails.interestRate.replace(',', '.')) : 0;
     const margin = loanDetails.margin ? parseFloat(loanDetails.margin.replace(',', '.')) : 0;
     const years = loanDetails.years ? parseFloat(loanDetails.years.replace(',', '.')) : 0;
+    const fullInterestRate = interestRate + margin;
 
-    if (principal > 0 && interestRate > 0 && years > 0) {
-      const fullInterestRate = interestRate + margin;
+    if (principal > 0 && fullInterestRate > 0 && years > 0) {
       const monthlyInterestRate = (fullInterestRate / 100) / 12;
       const numberOfPayments = years * 12;
       const payment =
