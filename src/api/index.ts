@@ -1,5 +1,4 @@
 export const fetchEuribor = async (): Promise<Euribor> => {
-  console.log('fetching euribor');
   const url = 'https://api.api-ninjas.com/v1/interestrate?name=euribor'
   const apiKey = import.meta.env.VITE_EURIBOR_API_KEY;
   const options = {
