@@ -137,11 +137,16 @@ function App() {
         />
       </div>
       {monthlyPayment !== null && (
-        <div className={classes.paymentInfo} aria-live="polite">
-          <p>Lainanlyhennys: {monthlyAmortization} €</p>
-          <p>Korko: {monthlyInterest} €</p>
-          <p>Kuukausittainen maksu: {monthlyPayment} €</p>
-        </div>
+        <>
+          <div className={classes.paymentInfo} aria-live="polite">
+            <p>Lainanlyhennys: {monthlyAmortization} €</p>
+            <p>Korko: {monthlyInterest} €</p>
+            <p>Kuukausittainen maksu: {monthlyPayment} €</p>
+          </div>
+          <div className={classes.progressWrapper}>
+            <div className={classes.progress} style={{ width: `${((+monthlyInterest / +monthlyPayment))*100}%` }}></div>
+          </div>
+        </>
       )}
     </div>
   )
