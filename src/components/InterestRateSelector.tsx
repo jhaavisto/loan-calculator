@@ -9,14 +9,17 @@ interface Props {
 const InterestRateSelector = ({ onRateChange }: Props) => {
   const [rates, setRates] = useState<Euribor>({ rates: {} });
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+      setHasError(false);
       try {
         const fetchedRates = await fetchEuribor();
         setRates(fetchedRates);
       } catch (error) {
+        setHasError(true);
         console.error('There was a problem fetching the Euribor rates: ', error);
       }
       setIsLoading(false);
@@ -34,14 +37,19 @@ const InterestRateSelector = ({ onRateChange }: Props) => {
         <p>Ladataan viitekorkoja...</p>
       ) : (
         <>
-          <span>Käytä viitekorkoa:</span>
-          <div className={classes.buttonGroup}>
-            {rateSelects.map((rate, index) => (
-              <button className={classes.button} key={rate} onClick={() => onRateChange(rates.rates[rate]?.toFixed(2) || '')}>
-                Euribor {rateSelectText[index]}kk {rates.rates[rate]?.toFixed(2) + '%' || ''}
-              </button>
-            ))}
-          </div>
+          {hasError && <p>Viitekorkoja ei voitu ladata.</p>}
+          {!hasError && (
+            <>
+              <span>Käytä viitekorkoa:</span>
+              <div className={classes.buttonGroup}>
+                {rateSelects.map((rate, index) => (
+                  <button className={classes.button} key={rate} onClick={() => onRateChange(rates.rates[rate]?.toFixed(2) || '')}>
+                    Euribor {rateSelectText[index]}kk {rates.rates[rate]?.toFixed(2) + '%' || ''}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
         </>
       )}
     </>
