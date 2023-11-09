@@ -23,43 +23,43 @@ function App() {
   const [monthlyAmortization, setMonthlyAmortization] = useState<string>('');
 
   useEffect(() => {
+    const calculateMonthlyPayment = (): void => {
+      // Ensure that the input is properly formatted as a float
+      const principal = loanDetails.principal ? parseFloat(loanDetails.principal.replace(',', '.')) : 0;
+      const interestRate = loanDetails.interestRate ? parseFloat(loanDetails.interestRate.replace(',', '.')) : 0;
+      const margin = loanDetails.margin ? parseFloat(loanDetails.margin.replace(',', '.')) : 0;
+      const years = loanDetails.years ? parseFloat(loanDetails.years.replace(',', '.')) : 0;
+      const fullInterestRate = interestRate + margin;
+  
+      if (principal > 0 && fullInterestRate > 0 && years > 0) {
+        const monthlyInterestRate = (fullInterestRate / 100) / 12;
+        const numberOfPayments = years * 12;
+        const payment =
+          principal *
+          (monthlyInterestRate /
+            (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments)));
+  
+        // Interest portion for the first month
+        const initialInterestPayment = principal * monthlyInterestRate;
+  
+        // Principal portion for the first month
+        const initialPrincipalPayment = payment - initialInterestPayment;
+  
+        setMonthlyPayment(payment.toFixed(2));
+        setMonthlyInterest(initialInterestPayment.toFixed(2));
+        setMonthlyAmortization(initialPrincipalPayment.toFixed(2));
+      } else {
+        setMonthlyPayment('');
+        setMonthlyInterest('');
+        setMonthlyAmortization('');
+      }
+    };
+
     calculateMonthlyPayment();
   }, [loanDetails]);
 
   const handleInterestRateChange = (newInterestRate: string) => {
     setLoanDetails({ ...loanDetails, interestRate: newInterestRate });
-  };
-
-  const calculateMonthlyPayment = (): void => {
-    // Ensure that the input is properly formatted as a float
-    const principal = loanDetails.principal ? parseFloat(loanDetails.principal.replace(',', '.')) : 0;
-    const interestRate = loanDetails.interestRate ? parseFloat(loanDetails.interestRate.replace(',', '.')) : 0;
-    const margin = loanDetails.margin ? parseFloat(loanDetails.margin.replace(',', '.')) : 0;
-    const years = loanDetails.years ? parseFloat(loanDetails.years.replace(',', '.')) : 0;
-    const fullInterestRate = interestRate + margin;
-
-    if (principal > 0 && fullInterestRate > 0 && years > 0) {
-      const monthlyInterestRate = (fullInterestRate / 100) / 12;
-      const numberOfPayments = years * 12;
-      const payment =
-        principal *
-        (monthlyInterestRate /
-          (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments)));
-
-      // Interest portion for the first month
-      const initialInterestPayment = principal * monthlyInterestRate;
-
-      // Principal portion for the first month
-      const initialPrincipalPayment = payment - initialInterestPayment;
-
-      setMonthlyPayment(payment.toFixed(2));
-      setMonthlyInterest(initialInterestPayment.toFixed(2));
-      setMonthlyAmortization(initialPrincipalPayment.toFixed(2));
-    } else {
-      setMonthlyPayment('');
-      setMonthlyInterest('');
-      setMonthlyAmortization('');
-    }
   };
 
   const handleInputChange = (
